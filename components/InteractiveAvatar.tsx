@@ -33,8 +33,8 @@ export default function InteractiveAvatar() {
   const [isLoadingRepeat, setIsLoadingRepeat] = useState(false);
   const [stream, setStream] = useState<MediaStream>();
   const [debug, setDebug] = useState<string>();
-  const [knowledgeId, setKnowledgeId] = useState<string>("");
-  const [avatarId, setAvatarId] = useState<string>("");
+  const [knowledgeId, setKnowledgeId] = useState<string>(process.env.KNOWLEDGE_ID || "");
+  const [avatarId, setAvatarId] = useState<string>(process.env.AVATAR_ID || "");
   const [language, setLanguage] = useState<string>("en");
 
   const [data, setData] = useState<StartAvatarResponse>();
@@ -94,6 +94,22 @@ export default function InteractiveAvatar() {
     avatar.current?.on(StreamingEvents.USER_STOP, (event) => {
       console.log(">>>>> User stopped talking:", event);
       setIsUserTalking(false);
+    });
+    avatar.current?.on(StreamingEvents.AVATAR_TALKING_MESSAGE, (message) => {
+      console.log('Avatar talking message:', message);
+      // You can display the message in the UI
+    });
+    avatar.current?.on(StreamingEvents.AVATAR_END_MESSAGE, (message) => {
+      console.log('Avatar end message:', message);
+      // Handle the end of the avatar's message, e.g., indicate the end of the conversation
+    });
+    avatar.current?.on(StreamingEvents.USER_TALKING_MESSAGE, (message) => {
+      console.log('User talking message:', message);
+      // Handle the user's message input to the avatar
+    });
+    avatar.current?.on(StreamingEvents.USER_END_MESSAGE, (message) => {
+      console.log('User end message:', message);
+      // Handle the end of the user's message, e.g., process the user's response
     });
     try {
       const res = await avatar.current.createStartAvatar({
@@ -333,7 +349,7 @@ export default function InteractiveAvatar() {
           )}
         </CardFooter>
       </Card>
-      <p className="font-mono text-right">
+      <p className="font-mono text-right hidden">
         <span className="font-bold">Console:</span>
         <br />
         {debug}

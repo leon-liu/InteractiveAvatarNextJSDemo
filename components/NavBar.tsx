@@ -19,7 +19,8 @@ export default function NavBar() {
         </Link>
         <div className="bg-gradient-to-br from-sky-300 to-indigo-500 bg-clip-text ml-4">
           <p className="text-xl font-semibold text-transparent">
-            HeyGen Interactive Avatar SDK NextJS Demo
+            {/* HeyGen Interactive Avatar SDK NextJS Demo */}
+            Demo
           </p>
         </div>
       </NavbarBrand>
@@ -32,7 +33,7 @@ export default function NavBar() {
           >
             Avatars
           </Link>
-          <Link
+          {/* <Link
             isExternal
             color="foreground"
             href="https://docs.heygen.com/reference/list-voices-v2"
@@ -61,7 +62,7 @@ export default function NavBar() {
           >
             <GithubIcon className="text-default-500" />
             SDK
-          </Link>
+          </Link> */}
           <ThemeSwitch />
         </NavbarItem>
       </NavbarContent>
